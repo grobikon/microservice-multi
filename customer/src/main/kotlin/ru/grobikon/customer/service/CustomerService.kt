@@ -1,7 +1,7 @@
 package ru.grobikon.customer.service
 
-import ru.grobikon.customer.dto.CustomerRegistrationDto
+import ru.grobikon.customer.dto.CustomerDto
 
 interface CustomerService {
-    fun registerCustomer(customerRequest: CustomerRegistrationDto)
+    fun registerCustomer(customerRequest: CustomerDto)
 }
