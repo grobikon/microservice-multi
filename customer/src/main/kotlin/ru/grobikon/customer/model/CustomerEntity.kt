@@ -12,8 +12,8 @@ class CustomerEntity(
     @GeneratedValue(
         strategy = GenerationType.SEQUENCE,
         generator = "customer_id_sequence")
-    var id: Long = 0,
-    var firstName: String,
-    var lastName: String,
-    var email: String
+    val id: Long = 0,
+    val firstName: String,
+    val lastName: String,
+    val email: String
 )

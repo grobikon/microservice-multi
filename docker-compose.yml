@@ -17,11 +17,26 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=grobikon
       - POSTGRES_DB=customer
-      - PGDATA=/data/postgresql/customer
+      - PGDATA=/data/postgresql
     volumes:
-      - postgres:/var/lib/postgresql/customer
+      - postgres:/var/lib/postgresql
     ports:
       - ${POSTGRES_PORT:-5432}:5432
+    networks:
+      - postgres
+  postgres-fraud:
+    image: postgres
+    restart: always
+    container_name: postgres-fraud
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=grobikon
+      - POSTGRES_DB=fraud
+      - PGDATA=/data/postgresql
+    volumes:
+      - postgres:/var/lib/postgresql
+    ports:
+      - ${POSTGRES_PORT:-5433}:5432
     networks:
       - postgres
 
