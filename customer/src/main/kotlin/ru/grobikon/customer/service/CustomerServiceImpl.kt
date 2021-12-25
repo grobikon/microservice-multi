@@ -1,7 +1,6 @@
 package ru.grobikon.customer.service
 
 import org.springframework.stereotype.Service
-import org.springframework.web.client.RestTemplate
 import ru.grobikon.clients.fraud.FraudCheckDto
 import ru.grobikon.clients.fraud.FraudClient
 import ru.grobikon.customer.dto.CustomerDto
@@ -12,7 +11,6 @@ import ru.grobikon.customer.repository.CustomerRepository
 @Service
 class CustomerServiceImpl(
     private val customerRepository: CustomerRepository,
-    private val restTemplate: RestTemplate,
     private val fraudClient: FraudClient
 ) : CustomerService {
 
