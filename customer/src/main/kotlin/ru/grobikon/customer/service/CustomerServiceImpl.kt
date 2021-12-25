@@ -23,12 +23,17 @@ class CustomerServiceImpl(
         //todo: проверка принята почта или нет
         customerRepository.saveAndFlush(customer)
         //todo: проверка не мошенник
-        val url = "http://localhost:8081/api/v1fraud-check/${customer.id}"
-        val fraudCheckResponse = restTemplate.getForObject(url, FraudCheckDto::class.java)
+        val url = "http://localhost:8081/api/v1fraud-check/{}"
+        try {
 
-        if (fraudCheckResponse != null && fraudCheckResponse.isFraudster) {
-            throw IllegalStateException("fraudster")
+            val fraudCheckResponse = restTemplate.getForObject(url, FraudCheckDto::class.java, customer.id)
+            if (fraudCheckResponse != null && fraudCheckResponse.isFraudster) {
+                throw IllegalStateException("fraudster")
+            }
+        }catch (e: Exception) {
+            println(e.message)
         }
+
         //todo: отправить уведомление
     }
 }
