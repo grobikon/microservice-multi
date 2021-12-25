@@ -12,7 +12,7 @@ class CustomerEntity(
     @GeneratedValue(
         strategy = GenerationType.SEQUENCE,
         generator = "customer_id_sequence")
-    val id: Long = 0,
+    val customerId: Long = 0,
     val firstName: String,
     val lastName: String,
     val email: String

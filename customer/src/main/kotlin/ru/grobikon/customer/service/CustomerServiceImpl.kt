@@ -3,6 +3,8 @@ package ru.grobikon.customer.service
 import org.springframework.stereotype.Service
 import ru.grobikon.clients.fraud.FraudCheckDto
 import ru.grobikon.clients.fraud.FraudClient
+import ru.grobikon.clients.notification.NotificationClient
+import ru.grobikon.clients.notification.NotificationDto
 import ru.grobikon.customer.dto.CustomerDto
 import ru.grobikon.customer.model.CustomerEntity
 import ru.grobikon.customer.repository.CustomerRepository
@@ -11,7 +13,8 @@ import ru.grobikon.customer.repository.CustomerRepository
 @Service
 class CustomerServiceImpl(
     private val customerRepository: CustomerRepository,
-    private val fraudClient: FraudClient
+    private val fraudClient: FraudClient,
+    private val notificationClient: NotificationClient
 ) : CustomerService {
 
     override fun registerCustomer(customerRequest: CustomerDto) {
@@ -25,7 +28,7 @@ class CustomerServiceImpl(
         customerRepository.saveAndFlush(customer)
         //todo: проверка не мошенник
         try {
-            val fraudCheckDto = fraudClient.isFraudster(customer.id)
+            val fraudCheckDto = fraudClient.isFraudster(customer.customerId)
             if (fraudCheckDto is FraudCheckDto && fraudCheckDto.isFraudster) {
                 throw IllegalStateException("fraudster")
             }
@@ -34,6 +37,12 @@ class CustomerServiceImpl(
             throw IllegalStateException(e.message)
         }
 
-        //todo: отправить уведомление notification
+        //todo: make it async. i.e add to queue
+        val notificationDto = NotificationDto(
+            toCustomerId = customer.customerId,
+            toCustomerEmail = customer.email,
+            message = "Привет ${customer.firstName}, приветствуем в Grobikon service."
+        )
+        notificationClient.sendNotification(notificationDto)
     }
 }
