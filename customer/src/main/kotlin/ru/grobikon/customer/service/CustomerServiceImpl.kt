@@ -1,11 +1,13 @@
 package ru.grobikon.customer.service
 
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import ru.grobikon.customer.dto.CustomerDto
 import ru.grobikon.customer.dto.FraudCheckDto
 import ru.grobikon.customer.model.CustomerEntity
 import ru.grobikon.customer.repository.CustomerRepository
+
 
 @Service
 class CustomerServiceImpl(
@@ -23,15 +25,20 @@ class CustomerServiceImpl(
         //todo: проверка принята почта или нет
         customerRepository.saveAndFlush(customer)
         //todo: проверка не мошенник
-        val url = "http://localhost:8081/api/v1fraud-check/{}"
         try {
 
-            val fraudCheckResponse = restTemplate.getForObject(url, FraudCheckDto::class.java, customer.id)
-            if (fraudCheckResponse != null && fraudCheckResponse.isFraudster) {
+            val responseEntity: ResponseEntity<Any> = restTemplate.getForEntity(
+                "http://FRAUD/api/v1/fraud-check/${customer.id}",
+                Any::class.java
+            )
+            if (responseEntity.body != null
+                && responseEntity.body is FraudCheckDto
+                && (responseEntity.body!! as FraudCheckDto).isFraudster) {
                 throw IllegalStateException("fraudster")
             }
         }catch (e: Exception) {
             println(e.message)
+            throw IllegalStateException(e.message)
         }
 
         //todo: отправить уведомление

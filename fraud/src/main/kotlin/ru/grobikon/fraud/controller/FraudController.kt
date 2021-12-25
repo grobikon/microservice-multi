@@ -9,16 +9,17 @@ import ru.grobikon.fraud.dto.FraudCheckDto
 import ru.grobikon.fraud.service.FraudCheckService
 
 @RestController
-@RequestMapping("api/v1fraud-check")
+@RequestMapping("api/v1/fraud-check")
 class FraudController(
     private val fraudCheckService: FraudCheckService
 ) {
     private val logger = LoggerFactory.getLogger(FraudController::class.java)
 
-    @GetMapping("{customerId}")
-    fun isFraudster(@PathVariable customerId: Int): FraudCheckDto {
+    @GetMapping(path = ["{customerId}"], headers = [] )
+    fun isFraudster(@PathVariable("customerId") customerId: Int): FraudCheckDto {
         val isFraudulentCustomer = fraudCheckService.isFraudulentCustomer(customerId)
         logger.info("Запрос на проверку мошенничества клиента: $customerId")
-        return FraudCheckDto(isFraudulentCustomer)
+        val responce = FraudCheckDto(isFraudulentCustomer)
+        return responce
     }
 }
