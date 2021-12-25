@@ -14,7 +14,7 @@ class FraudCheckHistory(
         strategy = GenerationType.SEQUENCE,
         generator = "fraud_id_sequence")
     val id: Long = 0,
-    val customerId: Int,
+    val customerId: Long,
     val isFraudster: Boolean,
     val date: LocalDateTime
 )

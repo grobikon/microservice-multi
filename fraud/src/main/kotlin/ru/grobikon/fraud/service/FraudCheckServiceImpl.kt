@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 class FraudCheckServiceImpl(
     private val fraudCheckHistoryRepository: FraudCheckHistoryRepository
 ): FraudCheckService {
-    override fun isFraudulentCustomer(customerId: Int): Boolean {
+    override fun isFraudulentCustomer(customerId: Long): Boolean {
         val fraudCheckHistory = FraudCheckHistory(
             customerId = customerId,
             isFraudster = false,

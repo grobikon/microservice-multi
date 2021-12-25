@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import ru.grobikon.fraud.dto.FraudCheckDto
+import ru.grobikon.clients.fraud.FraudCheckDto
 import ru.grobikon.fraud.service.FraudCheckService
 
 @RestController
@@ -16,10 +16,9 @@ class FraudController(
     private val logger = LoggerFactory.getLogger(FraudController::class.java)
 
     @GetMapping(path = ["{customerId}"], headers = [] )
-    fun isFraudster(@PathVariable("customerId") customerId: Int): FraudCheckDto {
+    fun isFraudster(@PathVariable("customerId") customerId: Long): FraudCheckDto {
         val isFraudulentCustomer = fraudCheckService.isFraudulentCustomer(customerId)
         logger.info("Запрос на проверку мошенничества клиента: $customerId")
-        val responce = FraudCheckDto(isFraudulentCustomer)
-        return responce
+        return FraudCheckDto(isFraudulentCustomer)
     }
 }

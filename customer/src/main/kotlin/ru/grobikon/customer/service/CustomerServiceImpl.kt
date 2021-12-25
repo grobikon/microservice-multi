@@ -1,10 +1,10 @@
 package ru.grobikon.customer.service
 
-import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
+import ru.grobikon.clients.fraud.FraudCheckDto
+import ru.grobikon.clients.fraud.FraudClient
 import ru.grobikon.customer.dto.CustomerDto
-import ru.grobikon.customer.dto.FraudCheckDto
 import ru.grobikon.customer.model.CustomerEntity
 import ru.grobikon.customer.repository.CustomerRepository
 
@@ -12,7 +12,8 @@ import ru.grobikon.customer.repository.CustomerRepository
 @Service
 class CustomerServiceImpl(
     private val customerRepository: CustomerRepository,
-    private val restTemplate: RestTemplate
+    private val restTemplate: RestTemplate,
+    private val fraudClient: FraudClient
 ) : CustomerService {
 
     override fun registerCustomer(customerRequest: CustomerDto) {
@@ -26,14 +27,8 @@ class CustomerServiceImpl(
         customerRepository.saveAndFlush(customer)
         //todo: проверка не мошенник
         try {
-
-            val responseEntity: ResponseEntity<Any> = restTemplate.getForEntity(
-                "http://FRAUD/api/v1/fraud-check/${customer.id}",
-                Any::class.java
-            )
-            if (responseEntity.body != null
-                && responseEntity.body is FraudCheckDto
-                && (responseEntity.body!! as FraudCheckDto).isFraudster) {
+            val fraudCheckDto = fraudClient.isFraudster(customer.id)
+            if (fraudCheckDto is FraudCheckDto && fraudCheckDto.isFraudster) {
                 throw IllegalStateException("fraudster")
             }
         }catch (e: Exception) {

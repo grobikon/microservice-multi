@@ -1,4 +1,4 @@
-package ru.grobikon.fraud.dto
+package ru.grobikon.clients.fraud
 
 data class FraudCheckDto(
     val isFraudster: Boolean
