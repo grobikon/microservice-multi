@@ -34,6 +34,6 @@ class CustomerServiceImpl(
             throw IllegalStateException(e.message)
         }
 
-        //todo: отправить уведомление
+        //todo: отправить уведомление notification
     }
 }
