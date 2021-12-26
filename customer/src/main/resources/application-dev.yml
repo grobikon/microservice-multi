@@ -2,7 +2,7 @@ spring:
   datasource:
     username: grobikon
     password: postgres
-    url: jdbc:postgresql://localhost:5432/customer
+    url: jdbc:postgresql://localhost:5435/customer
 
   jpa:
     show-sql: true

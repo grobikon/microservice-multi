@@ -12,7 +12,7 @@ services:
   postgres:
     image: postgres
     restart: always
-    container_name: postgres-demo
+    container_name: postgres-customer
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=grobikon
@@ -21,7 +21,7 @@ services:
     volumes:
       - postgres:/var/lib/postgresql
     ports:
-      - ${POSTGRES_PORT:-5432}:5432
+      - ${POSTGRES_PORT:-5435}:5432
     networks:
       - postgres
   postgres-fraud:
@@ -73,3 +73,9 @@ services:
     container_name: zipkin
     ports:
       - "9411:9411"
+  rabbitmq:
+    image: rabbitmq:3.9.11-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"

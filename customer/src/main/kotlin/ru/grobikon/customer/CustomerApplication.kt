@@ -5,7 +5,12 @@ import org.springframework.boot.runApplication
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient
 import org.springframework.cloud.openfeign.EnableFeignClients
 
-@SpringBootApplication
+@SpringBootApplication(
+    scanBasePackages = [
+        "ru.grobikon.customer",
+        "ru.grobikon.amqp"
+    ]
+)
 @EnableEurekaClient
 @EnableFeignClients(basePackages = ["ru.grobikon.clients"])
 class CustomerApplication
