@@ -34,8 +34,7 @@ class RabbitMQConfig(
     //Передавать сообщения, будем в виде Json
     @Bean
     fun jacksonConverter(): MessageConverter {
-        val jackson2JsonMessageConverter = Jackson2JsonMessageConverter()
-        return jackson2JsonMessageConverter
+        return Jackson2JsonMessageConverter()
     }
     
 }

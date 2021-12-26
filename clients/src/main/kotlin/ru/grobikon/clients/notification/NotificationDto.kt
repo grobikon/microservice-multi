@@ -1,7 +1,7 @@
 package ru.grobikon.clients.notification
 
 data class NotificationDto(
-    val message: String,
-    val toCustomerEmail: String,
-    val toCustomerId: Long,
+    var message: String? = null,
+    var toCustomerEmail: String? = null,
+    var toCustomerId: Long? = null,
 )

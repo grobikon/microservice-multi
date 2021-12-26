@@ -14,10 +14,10 @@ class NotificationServiceImpl(
     override fun send(notificationDto: NotificationDto) {
         val notificationEntity = NotificationEntity(
             date = LocalDateTime.now(),
-            message = notificationDto.message,
+            message = notificationDto.message!!,
             sender = "Grobikon Notification Service",
-            toCustomerId = notificationDto.toCustomerId,
-            toCustomerEmail = notificationDto.toCustomerEmail
+            toCustomerId = notificationDto.toCustomerId!!,
+            toCustomerEmail = notificationDto.toCustomerEmail!!
         )
         notificationRepository.save(notificationEntity)
     }

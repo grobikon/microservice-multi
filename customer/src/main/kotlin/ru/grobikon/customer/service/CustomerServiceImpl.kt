@@ -30,7 +30,7 @@ class CustomerServiceImpl(
         //проверка не мошенник
         try {
             val fraudCheckDto = fraudClient.isFraudster(customer.customerId)
-            if (fraudCheckDto is FraudCheckDto && fraudCheckDto.isFraudster) {
+            if (fraudCheckDto.isFraudster!!) {
                 throw IllegalStateException("fraudster")
             }
         }catch (e: Exception) {
