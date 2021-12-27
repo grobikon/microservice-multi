@@ -24,7 +24,7 @@
       <module name="customer" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
       <module name="fraud" options="-parameters" />
-      <module name="microservice-multi" options="-parameters" />
+      <module name="microservice-multi" options="" />
       <module name="notification" options="-parameters" />
     </option>
   </component>
