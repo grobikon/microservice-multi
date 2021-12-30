@@ -2,9 +2,7 @@ package ru.grobikon.customer.service
 
 import org.springframework.stereotype.Service
 import ru.grobikon.amqp.RabbitMQMessageProducer
-import ru.grobikon.clients.fraud.FraudCheckDto
 import ru.grobikon.clients.fraud.FraudClient
-import ru.grobikon.clients.notification.NotificationClient
 import ru.grobikon.clients.notification.NotificationDto
 import ru.grobikon.customer.dto.CustomerDto
 import ru.grobikon.customer.model.CustomerEntity
